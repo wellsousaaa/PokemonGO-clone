@@ -30,7 +30,8 @@ code {
 .pokeball {
   width: 50px;
   height: 50px;
-  background-color: black;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/528/528101.png");
+  background-size: cover;
   border-radius: 100%;
 }
 

@@ -1,10 +1,10 @@
 import supabase from "./supabase";
 
-export const getNearbyPokemon = async () => {
+export const getNearbyPokemon = async (coords) => {
   return await supabase.rpc("get_nearby_pokemon", {
-    distance: 0.1,
-    lat: process.env.REACT_APP_DEFAULT_LAT,
-    lng: process.env.REACT_APP_DEFAULT_LNG,
+    distance: 0.3,
+    lat: coords.lat,
+    lng: coords.lng,
   });
   // return await supabase.from("pokemon").select();
 };

@@ -15,15 +15,16 @@ export default function OverWorld(props) {
     // if("H" in window) return;
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((pos) => {
-        console.log(pos);
+        // const defaultCoords = {
+        //   lat: pos.coords.latitude,
+        //   lng: pos.coords.longitude,
+        // };
         const H = window.H;
         const platform = new H.service.Platform({
           apikey: process.env.REACT_APP_MAP_KEY,
         });
 
         const defaultLayers = platform.createDefaultLayers();
-
-        console.log(defaultLayers);
 
         defaultLayers.raster.normal.base.setMax(1000);
         // defaultLayers.raster.normal.base.setMin(999);
@@ -36,7 +37,7 @@ export default function OverWorld(props) {
           defaultLayers.raster.normal.base,
           {
             // This map is centered over Europe
-            center: defaultCoords || {
+            center: {
               lat: pos.coords.latitude,
               lng: pos.coords.longitude,
             },
@@ -44,8 +45,6 @@ export default function OverWorld(props) {
             pixelRatio: window.devicePixelRatio || 1,
           }
         );
-
-        console.log(map.getViewModel());
 
         window.addEventListener("resize", () => map.getViewPort().resize());
 
@@ -94,7 +93,6 @@ export default function OverWorld(props) {
         }
 
         function startBattle(id) {
-          console.log("Entrou aqui");
           props.setIsBattle({ id });
         }
 
@@ -124,24 +122,23 @@ export default function OverWorld(props) {
         setMap(map);
 
         (async () => {
-          const { data, error } = await getNearbyPokemon();
+          const { data, error } = await getNearbyPokemon(defaultCoords);
 
-          if (error) return console.log(error);
+          if (error) return;
           for (let pokemon of data) {
             const pokemonImage =
               "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/" +
               pokemon.poke_id +
               ".png";
 
-            console.log(
-              getDistanceFromLatLonInKm(
-                defaultCoords.lat,
-                defaultCoords.lng,
-                pokemon.latitude,
-                pokemon.longitude
-              ),
-              pokemonImage
-            );
+            // getDistanceFromLatLonInKm(
+            //   defaultCoords.lat,
+            //   defaultCoords.lng,
+            //   pokemon.latitude,
+            //   pokemon.longitude
+            // ),
+            //   pokemonImage
+            // );
             const handleBattle = () => {
               startBattle(pokemon.poke_id);
             };
@@ -184,13 +181,81 @@ export default function OverWorld(props) {
 
   return (
     <div>
-      <div className="bottom-ui">
-        <div className="profile" />
-        <div className="pokeball" />
-        <div className="pokemon-nearby" />
-      </div>
+      <Menu />
       <div className="weather" />
       <div ref={mapRef} style={{ height: "100vh" }}></div>
     </div>
   );
 }
+
+const Menu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [section, setSection] = useState("pokemon");
+
+  if (!isOpen)
+    return (
+      <div className="bottom-ui">
+        <div className="profile" />
+        <div className="pokeball" onClick={() => setIsOpen(true)} />
+        <div className="pokemon-nearby" />
+      </div>
+    );
+
+  return (
+    <div className="menu">
+      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <h2 onClick={() => setSection("pokemon")}>Pokemon</h2>
+        <h2 onClick={() => setSection("bag")}>Bag</h2>
+      </div>
+
+      {section === "pokemon" ? (
+        <div className="pokemon-list">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      ) : (
+        <div className="bag-list">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      )}
+
+      <div className="close-button" onClick={() => setIsOpen(false)}></div>
+    </div>
+  );
+};

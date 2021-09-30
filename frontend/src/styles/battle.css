@@ -4,7 +4,11 @@
   z-index: 1000;
   height: 100vh;
   width: 100vw;
-  background-image: linear-gradient(to bottom, rgb(64, 194, 64) 60%, green 40%);
+  /* background-image: linear-gradient(to bottom, rgb(64, 194, 64) 60%, green 40%); */
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmYjI4MjFhLTE0MDYtNGExZC05YjA0LTY2NjhmMjc4ZTk0NFwvZDg1aWp2ci1jMmM0YTkwMC01Mzg2LTRhNmEtYmVlOC01YjczZTUyMzVlYmYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hwYkCP7xIPicEa84MT0SX9aDXnyvkkC0DbhF6Cqb2WQ");
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  image-rendering: pixelated;
 
   display: flex;
   align-items: center;
@@ -41,12 +45,20 @@
   transform: translate(-50%, -30%);
 }
 
+.battle-pokeball-container {
+  width: 150px;
+  height: 150px;
+}
+
 .battle-pokeball {
+  position: absolute;
   background-image: url("https://i.gifer.com/origin/28/2860d2d8c3a1e402e0fc8913cd92cd7a_w200.gif");
   width: 150px;
   height: 150px;
-  background-size: cover;
+  background-size: 210px 210px;
+  background-position: -25px -25px;
   image-rendering: pixelated;
+  /* border-radius: 100%; */
 
   /* position: absolute;
   bottom: 0;
@@ -68,7 +80,7 @@
   transform: translate(-50%, 0); */
 }
 
-.battle-ui div:not(.battle-pokeball),
+.battle-ui div:not(.battle-pokeball, .battle-pokeball-container),
 .run-button {
   background-color: white;
   border-radius: 100%;
@@ -114,6 +126,176 @@
   }
   100% {
     transform: var(--default-transform) translateY(0px);
+    opacity: 1;
+  }
+}
+
+.pokeball-throw {
+  animation: throw 400ms 2 linear;
+  transition: all var(--transition-time) var(--ease-function) !important;
+  transform: var(--scale);
+  left: var(--left) !important;
+  top: var(--top) !important;
+}
+
+/* @keyframes throw {
+  0% {
+    transform: rotate(0deg) var(--scale);
+  }
+  100% {
+    transform: rotate(360deg) var(--scale);
+  }
+} */
+
+.pokeball-open {
+  background-image: url("http://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/e7cb1a05e60dd2e.png") !important;
+  background-size: 100% 120%;
+}
+
+.pokemon-info {
+  display: none;
+}
+
+.battle-pokemon[data-catching="true"] {
+  animation: catchPokemon 2s 200ms ease-in-out;
+}
+
+@keyframes catchPokemon {
+  0% {
+    transform: translate(-50%, -30%) scale(1);
+  }
+
+  25% {
+    filter: brightness(20);
+    transform: translate(-50%, -30%) scale(1);
+    opacity: 1;
+  }
+
+  70%,
+  100% {
+    filter: brightness(2000);
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.2);
+  }
+}
+
+.catch-container {
+  position: absolute;
+  overflow: hidden;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2fb2821a-1406-4a1d-9b04-6668f278e944/d85ijvr-c2c4a900-5386-4a6a-bee8-5b73e5235ebf.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJmYjI4MjFhLTE0MDYtNGExZC05YjA0LTY2NjhmMjc4ZTk0NFwvZDg1aWp2ci1jMmM0YTkwMC01Mzg2LTRhNmEtYmVlOC01YjczZTUyMzVlYmYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hwYkCP7xIPicEa84MT0SX9aDXnyvkkC0DbhF6Cqb2WQ");
+  background-repeat: no-repeat;
+  background-size: 200% 140%;
+  background-position: 60% 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: backgroundZoomIn 7s 1s ease-in-out forwards;
+}
+
+.catch-pokeball {
+  width: 50px;
+  height: 50px;
+  background-image: url("http://www.pokemongobrasil.com/wp-content/uploads/2015/09/cropped-favicon.png");
+  background-size: 100% 100%;
+  animation: catchPokeball 7s 1s;
+}
+
+.catch-container > div {
+  animation: zoomIn 7s ease-in-out forwards;
+}
+
+@keyframes catchPokeball {
+  0%,
+  25%,
+  50%,
+  75% {
+    transform: rotate(0deg);
+  }
+
+  10%,
+  35%,
+  60% {
+    transform: rotate(15deg);
+  }
+  15%,
+  40%,
+  65% {
+    transform: rotate(-15deg);
+  }
+
+  85%,
+  100% {
+    filter: brightness(1);
+  }
+  90% {
+    filter: brightness(1000);
+  }
+}
+
+@keyframes backgroundZoomIn {
+  0% {
+    background-size: 200% 140%;
+  }
+
+  65% {
+    background-size: 240% 180%;
+  }
+
+  100% {
+    background-size: 240% 180%;
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(1);
+  }
+
+  65% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+.catch-modal {
+  width: 90vw;
+  height: 40vh;
+  position: absolute;
+  z-index: 1001;
+  background-color: white;
+
+  left: 50%;
+  top: 50%;
+  bottom: 0;
+  opacity: 0;
+  animation: modal-appear 900ms 9s forwards;
+}
+
+@keyframes modal-appear {
+  0% {
+    bottom: 0;
+    top: 100%;
+    transform: translate(-50%, -0%);
+    width: 10vw;
+    opacity: 1;
+  }
+
+  50% {
+    width: 10vw;
+    opacity: 1;
+  }
+
+  100% {
+    width: 90vw;
+    transform: translate(-50%, -50%);
     opacity: 1;
   }
 }
