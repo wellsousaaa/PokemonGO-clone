@@ -101,6 +101,7 @@ code {
   z-index: 99;
   /* transform: scale(1.2); */
   transform: scale(2);
+  /* animation: pikomon-appear 1s forwards; */
 }
 
 /* .pikomon::after, */
@@ -128,5 +129,19 @@ code {
   100% {
     transform: scale(2.5);
     border: 2px solid transparent;
+  }
+}
+
+@keyframes pikomon-appear {
+  0%,
+  30%,
+  65%,
+  75%,
+  100% {
+    transform: scale(2) translateY(0);
+  }
+  15%,
+  45% {
+    transform: scale(2) translateY(-5px);
   }
 }

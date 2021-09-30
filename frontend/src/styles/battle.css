@@ -202,7 +202,7 @@
   height: 50px;
   background-image: url("http://www.pokemongobrasil.com/wp-content/uploads/2015/09/cropped-favicon.png");
   background-size: 100% 100%;
-  animation: catchPokeball 7s 1s;
+  animation: catchPokeball 7s 1s forwards;
 }
 
 .catch-container > div {
@@ -210,9 +210,11 @@
 }
 
 @keyframes catchPokeball {
-  0%,
+  7%,
   25%,
+  32%,
   50%,
+  57%,
   75% {
     transform: rotate(0deg);
   }
@@ -222,9 +224,9 @@
   60% {
     transform: rotate(15deg);
   }
-  15%,
-  40%,
-  65% {
+  13%,
+  38%,
+  63% {
     transform: rotate(-15deg);
   }
 
