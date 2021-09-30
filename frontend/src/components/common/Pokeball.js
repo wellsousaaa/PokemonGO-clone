@@ -90,18 +90,27 @@ function Pokeball(props) {
         /// Checar se o pokemon foi pego
         const poke = document.querySelector(".battle-pokemon");
 
+        console.log(x - pokeballX.current * 5, poke.offsetLeft - 40);
+
         if (
           p - pokeball.current * 5 > poke.offsetTop - 100 &&
           p - pokeball.current * 5 <
-            poke.offsetTop - 100 + poke.offsetHeight / 1.9
+            poke.offsetTop - 100 + poke.offsetHeight / 1.9 &&
+          x - pokeballX.current * 5 < poke.offsetLeft - 40 &&
+          x - pokeballX.current * 5 > poke.offsetLeft - poke.offsetWidth / 3
         ) {
           el.current.style.setProperty("--top", "10%");
           el.current.className = el.current.className + " pokeball-open";
           props.setIsCatching(true);
           // window.alert("Pegou");
         } else {
+          const finalThrowPositionY = p - pokeball.current * 7 + "px";
+          el.current.style.top = finalThrowPositionY;
+          el.current.style.opacity = "0";
+
           setTimeout(() => {
             if (!el.current) return;
+            el.current.style.opacity = "1";
             el.current.style.top = "unset";
             el.current.className = "battle-pokeball";
             el.current.style.left = "unset";
