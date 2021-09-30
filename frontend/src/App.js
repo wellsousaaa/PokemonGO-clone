@@ -9,7 +9,7 @@ function App() {
     <main style={{ overflow: "hidden" }}>
       {isBattle ? <Battle data={isBattle} setIsBattle={setIsBattle} /> : null}
 
-      <OverWorld setIsBattle={setIsBattle} />
+      <OverWorld isBattle={isBattle} setIsBattle={setIsBattle} />
     </main>
   );
 }

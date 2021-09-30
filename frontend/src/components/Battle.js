@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { deletePokemon } from "../helpers/pokemon";
 import Pokeball from "./common/Pokeball";
 
 export default function Battle(props) {
@@ -12,11 +13,16 @@ export default function Battle(props) {
     }, 2000);
   };
 
+  const battleFinished = async () => {
+    const { data, error } = await deletePokemon(props.data.uuid);
+    props.setIsBattle(false);
+  };
+
   if (isCatching)
     return (
       <>
         <div className="catch-modal">
-          <button onClick={() => props.setIsBattle(false)}>Concluido</button>
+          <button onClick={battleFinished}>Concluido</button>
         </div>
         <div className="catch-container">
           <div>

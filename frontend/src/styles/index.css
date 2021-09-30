@@ -67,10 +67,20 @@ code {
   background-color: #fff;
   width: 100px;
   height: 35px;
+  display: flex;
+  justify-content: space-evenly;
+
   /* bottom: 6%;
   right: 0; */
 
   border-radius: 10px 0 0 10px;
+}
+
+.pokemon-nearby img {
+  max-width: 30%;
+  object-fit: contain;
+  filter: brightness(0);
+  image-rendering: pixelated;
 }
 
 .player {

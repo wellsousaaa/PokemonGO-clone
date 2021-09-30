@@ -8,3 +8,12 @@ export const getNearbyPokemon = async (coords) => {
   });
   // return await supabase.from("pokemon").select();
 };
+
+export const deletePokemon = async (uuid) => {
+  const { data, error } = await supabase
+    .from("pokemon")
+    .delete()
+    .eq("id", uuid);
+  console.log(data, error);
+  return { data, error };
+};
