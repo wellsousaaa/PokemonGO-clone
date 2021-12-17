@@ -30,7 +30,12 @@ function Pokeball(props) {
 
     pokeballX.current =
       pokeballX.current +
-      (e.changedTouches[0].clientX > lastX.current ? -10 : 10);
+      (e.changedTouches[0].clientX - lastX.current <= 4 &&
+      e.changedTouches[0].clientX - lastX.current >= -4
+        ? 0
+        : e.changedTouches[0].clientX > lastX.current
+        ? -10
+        : 10);
 
     lastX.current = e.changedTouches[0].clientX;
     lastY.current = e.changedTouches[0].clientY;
@@ -62,6 +67,9 @@ function Pokeball(props) {
     const transitionEase = "cubic-bezier(0.17, 0.67, 0.79, 1.64)";
     const startScale = "scale(0.7)";
 
+    /// https://cdn.lowgif.com/full/70e39585bb0f392f-realistic-pokeball-physics-pokemon-go-on-scratch.gif
+    el.current.style.backgroundImage =
+      "url('https://cdn.lowgif.com/full/70e39585bb0f392f-realistic-pokeball-physics-pokemon-go-on-scratch.gif')";
     el.current.style.setProperty("--left", throwPositionX);
     el.current.style.setProperty("--top", throwPositionY);
     el.current.style.setProperty("--transition-time", transitionTime);
@@ -90,14 +98,26 @@ function Pokeball(props) {
         /// Checar se o pokemon foi pego
         const poke = document.querySelector(".battle-pokemon");
 
-        console.log(x - pokeballX.current * 5, poke.offsetLeft - 40);
+        console.log("Onde a pokebola parou X:", x - pokeballX.current * 5);
+        console.log("Onde a pokebola parou Y:", p - pokeball.current * 5);
+
+        console.log("X1 do Pokémon: ", poke.offsetLeft - 40);
+        console.log(
+          "X2 do pokémon: ",
+          poke.offsetLeft - poke.offsetWidth / 1.5
+        );
+        console.log("Y1 do Pokémon: ", poke.offsetTop - 100);
+        console.log(
+          "Y2 do Pokémon: ",
+          poke.offsetTop - 100 + poke.offsetHeight / 1.9
+        );
 
         if (
           p - pokeball.current * 5 > poke.offsetTop - 100 &&
           p - pokeball.current * 5 <
             poke.offsetTop - 100 + poke.offsetHeight / 1.9 &&
           x - pokeballX.current * 5 < poke.offsetLeft - 40 &&
-          x - pokeballX.current * 5 > poke.offsetLeft - poke.offsetWidth / 3
+          x - pokeballX.current * 5 > poke.offsetLeft - poke.offsetWidth / 1.5
         ) {
           el.current.style.setProperty("--top", "10%");
           el.current.className = el.current.className + " pokeball-open";
@@ -115,6 +135,8 @@ function Pokeball(props) {
             el.current.className = "battle-pokeball";
             el.current.style.left = "unset";
             el.current.style.setProperty("--scale", "scale(1)");
+            el.current.style.backgroundImage =
+              'url("https://i.gifer.com/origin/28/2860d2d8c3a1e402e0fc8913cd92cd7a_w200.gif")';
           }, 1000);
         }
       }, p + pokeball.current * 5);

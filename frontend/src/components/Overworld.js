@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { getNearbyPokemon } from "../helpers/pokemon";
 import { getDistanceFromLatLonInKm } from "../helpers/radius";
+import Menu from "./common/Menu";
 import NearbyPokemon from "./common/NearbyPokemon";
+import Pokedex from "./common/Pokedex";
 
 const defaultCoords = {
   lat: process.env.REACT_APP_DEFAULT_LAT,
@@ -47,42 +49,40 @@ export default function OverWorld(props) {
 
       if (distance > 0.15) {
         nearby.push({ icon: pokemonImage, distance });
-        continue;
-      }
+      } else {
+        const handleBattle = () => {
+          startBattle(pokemon.poke_id, pokemon.id);
+        };
 
-      const handleBattle = () => {
-        startBattle(pokemon.poke_id, pokemon.id);
-      };
-
-      const pokemonIcon = new H.map.DomIcon(
-        makeMarker(
-          "pikomon",
+        const pokemonIcon = new H.map.DomIcon(
+          makeMarker(
+            "pikomon",
+            {
+              width: 80,
+              height: 60,
+            },
+            pokemonImage
+          ),
           {
-            width: 80,
-            height: 60,
-          },
-          pokemonImage
-        ),
-        {
-          // the function is called every time marker enters the viewport
-          onAttach: function (clonedElement, domIcon, domMarker) {
-            clonedElement.addEventListener("touchend", handleBattle);
-          },
-          // the function is called every time marker leaves the viewport
-          onDetach: function (clonedElement, domIcon, domMarker) {
-            clonedElement.removeEventListener("touchend", handleBattle);
-          },
-        }
-      );
-
-      const pokemonMarker = new H.map.DomMarker(
-        { lat: pokemon.latitude, lng: pokemon.longitude },
-        { icon: pokemonIcon }
-      );
-      const pk = map.addObject(pokemonMarker);
-      pokemonRef.current.push(pk);
-      setNearbyPokemon(nearby);
+            // the function is called every time marker enters the viewport
+            onAttach: function (clonedElement, domIcon, domMarker) {
+              clonedElement.addEventListener("touchend", handleBattle);
+            },
+            // the function is called every time marker leaves the viewport
+            onDetach: function (clonedElement, domIcon, domMarker) {
+              clonedElement.removeEventListener("touchend", handleBattle);
+            },
+          }
+        );
+        const pokemonMarker = new H.map.DomMarker(
+          { lat: pokemon.latitude, lng: pokemon.longitude },
+          { icon: pokemonIcon }
+        );
+        const pk = map.addObject(pokemonMarker);
+        pokemonRef.current.push(pk);
+      }
     }
+    setNearbyPokemon(nearby);
   };
 
   useEffect(() => {
@@ -170,90 +170,17 @@ export default function OverWorld(props) {
   }, []);
 
   useEffect(() => {
-    console.log("entrou aqui");
     fetchPokemon();
   }, [props.isBattle]);
 
   return (
     <div>
       <Menu nearbyPokemon={nearbyPokemon} />
-      <div className="weather" />
-      <div ref={mapRef} style={{ height: "100vh" }}></div>
+      <Pokedex />
+      <div ref={mapRef} style={{ height: window.innerHeight }}></div>
     </div>
   );
 }
-
-const Menu = ({ nearbyPokemon }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [section, setSection] = useState("pokemon");
-
-  if (!isOpen)
-    return (
-      <div className="bottom-ui">
-        <div className="profile" />
-        <div className="pokeball" onClick={() => setIsOpen(true)} />
-        <NearbyPokemon nearbyPokemon={nearbyPokemon} />
-      </div>
-    );
-
-  return (
-    <div className="menu">
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <h2 onClick={() => setSection("pokemon")}>Pokemon</h2>
-        <h2 onClick={() => setSection("bag")}>Bag</h2>
-      </div>
-
-      {section === "pokemon" ? (
-        <div className="pokemon-list">
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-      ) : (
-        <div className="bag-list">
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-      )}
-
-      <div className="close-button" onClick={() => setIsOpen(false)}></div>
-    </div>
-  );
-};
 
 function makeMarker(
   className,
