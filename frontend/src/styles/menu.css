@@ -106,7 +106,8 @@
   align-items: center;
 }
 
-.pokemon-list-info h3 {
+.pokemon-list-info h3,
+.profile-screen h3 {
   font-size: 15pt;
   font-weight: 500;
 }

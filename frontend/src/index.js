@@ -5,16 +5,35 @@ import reportWebVitals from "./reportWebVitals";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import "./styles/battle.css";
 import "./styles/menu-ui.css";
+
+import "./styles/intro.css";
 import "./styles/index.css";
+import "./styles/catch.css";
+import Profile from "./components/common/Profile.js";
 
 function Localization() {
-  if ("geolocation" in navigator) return <App />;
-  return <h1>Você não tem gps mané</h1>;
+  // if ("geolocation" in navigator) return <App />;
+  return (
+    <main className="intro">
+      <h1>Pokémon GO</h1>
+      <img src="https://pbs.twimg.com/profile_images/1155697286078296069/muxy-u6y_400x400.jpg" />
+
+      <p>Lorem ipsum</p>
+      <input type="text" placeholder="Insira seu username" />
+      <button>Start</button>
+
+      <Profile intro />
+      <p>Made by Wendell de Sousa | 2021</p>
+
+      <button>Github</button>
+      <button>Email</button>
+    </main>
+  );
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Localization />
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -13,7 +13,7 @@ const Menu = ({ nearbyPokemon }) => {
 
   return (
     <div className="bottom-ui">
-      <div className="profile" />
+      <div className="profile" onClick={() => setIsProfileOpen(true)} />
       <div className="pokeball" onClick={() => setListIsOpen(true)} />
       <NearbyPokemon nearbyPokemon={nearbyPokemon} />
     </div>

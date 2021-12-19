@@ -285,20 +285,6 @@
   }
 }
 
-.catch-modal {
-  width: 90vw;
-  height: 40%;
-  position: absolute;
-  z-index: 1001;
-  background-color: white;
-
-  left: 50%;
-  top: 50%;
-  bottom: 0;
-  opacity: 0;
-  animation: modal-appear 900ms 9s forwards;
-}
-
 @keyframes modal-appear {
   0% {
     bottom: 0;

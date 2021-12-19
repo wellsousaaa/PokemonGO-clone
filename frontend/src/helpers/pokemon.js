@@ -22,3 +22,11 @@ export const addHistoric = async (username, photo, pokemon_id, type) => {
     .from("historic")
     .insert([{ username, photo, pokemon_id, type }]);
 };
+
+export const getHistoric = async (limit) => {
+  return await supabase
+    .from("historic")
+    .select()
+    .limit(limit)
+    .order("created_at", { ascending: false });
+};

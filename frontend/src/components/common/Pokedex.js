@@ -25,7 +25,9 @@ export default function Pokedex(props) {
     <>
       {isOpen && (
         <div className="pokedex">
-          <div className="close-button" onClick={() => setIsOpen(false)} />
+          <div className="close-button" onClick={() => setIsOpen(false)}>
+            <div>X</div>
+          </div>
           <header>
             <div>
               <h3>Pokedex</h3>

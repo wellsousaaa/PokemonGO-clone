@@ -3,6 +3,9 @@ import { addHistoric, deletePokemon } from "../helpers/pokemon";
 import Pokeball from "./common/Pokeball";
 import pokedex from "../helpers/pokemon.json";
 
+import { FcFullBattery, FcDoughnutChart } from "react-icons/fc";
+import { IconContext } from "react-icons/lib";
+
 export default function Battle(props) {
   const [isCatching, setIsCatching] = useState(false);
 
@@ -26,13 +29,15 @@ export default function Battle(props) {
   };
 
   const generatePokemon = async () => {
+    const cp = Math.floor(Math.random() * (800 - 100 + 1)) + 100;
+
     return {
       id: props.data.id,
       date: new Date().getTime(),
-      specie_name: "Placeholder",
-      name: "Placeholder",
+      specie_name: pokemon.Name,
+      name: pokemon.Name,
       favorite: false,
-      cp: 500,
+      cp,
       max_cp: 1500,
       types: [],
       stats: {
@@ -67,7 +72,21 @@ export default function Battle(props) {
     return (
       <>
         <div className="catch-modal">
-          <button onClick={battleFinished}>Concluido</button>
+          <IconContext.Provider value={{ size: 35 }}>
+            <div className="catch-prizes">
+              <span>
+                <FcFullBattery /> 100
+              </span>
+              <span>
+                <FcDoughnutChart /> 3
+              </span>
+            </div>
+          </IconContext.Provider>
+          <hr />
+          <h2>
+            TOTAL <span className="catch-xp">600 XP</span>
+          </h2>
+          <button onClick={battleFinished}>OK</button>
         </div>
         <div className="catch-container">
           <div>

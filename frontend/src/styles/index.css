@@ -30,7 +30,7 @@ code {
 .pokeball {
   width: 50px;
   height: 50px;
-  background-image: url("https://cdn-icons-png.flaticon.com/512/528/528101.png");
+  background-image: url("../media/pokeball.png");
   background-size: cover;
   border-radius: 100%;
 }
@@ -152,5 +152,49 @@ code {
   width: 90%;
   border-radius: 0.5rem;
   background-color: rgb(221, 221, 221);
-  height: 5rem;
+  min-height: 5rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.pokeball-icon,
+.pokemon-icon {
+  width: 15%;
+  height: 75%;
+  border-radius: 0.3rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.pokeball-icon {
+  background-image: url("../media/pokeball.png");
+  background-size: 2rem 2rem;
+}
+
+.pokemon-icon {
+  image-rendering: pixelated;
+  background-size: contain;
+  animation: 2s pokemon-icon infinite ease-in-out;
+}
+
+.profile-description {
+  width: 60%;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.profile-description span {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+@keyframes pokemon-icon {
+  0%,
+  30% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-7px);
+  }
 }

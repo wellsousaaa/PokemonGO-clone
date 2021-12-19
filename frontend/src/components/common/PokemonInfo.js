@@ -57,10 +57,9 @@ export default function PokemonInfo(props) {
         </div>
       </div>
 
-      <div
-        className="close-button"
-        onClick={() => props.setIsOpen(false)}
-      ></div>
+      <div className="close-button" onClick={() => props.setIsOpen(false)}>
+        <div>X</div>
+      </div>
     </div>
   );
 }
