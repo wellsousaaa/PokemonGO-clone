@@ -14,19 +14,24 @@ import Profile from "./components/common/Profile.js";
 function Localization() {
   // if ("geolocation" in navigator) return <App />;
   return (
-    <main className="intro">
-      <h1>Pokémon GO</h1>
-      <img src="https://pbs.twimg.com/profile_images/1155697286078296069/muxy-u6y_400x400.jpg" />
+    <main className="intro-container">
+      <div className="intro">
+        {/* <h1>Pokémon GO</h1> */}
+        <img
+          className="go-icon"
+          src="https://pbs.twimg.com/profile_images/1155697286078296069/muxy-u6y_400x400.jpg"
+        />
 
-      <p>Lorem ipsum</p>
-      <input type="text" placeholder="Insira seu username" />
-      <button>Start</button>
+        <p> Insira o seu username e ative a localização para poder jogar! </p>
+        <input type="text" placeholder="Insira seu username" />
+        <button>Start</button>
 
-      <Profile intro />
-      <p>Made by Wendell de Sousa | 2021</p>
+        <Profile intro />
+        <p>Made by Wendell de Sousa | 2021</p>
 
-      <button>Github</button>
-      <button>Email</button>
+        <button>Github</button>
+        <button>Email</button>
+      </div>
     </main>
   );
 }
