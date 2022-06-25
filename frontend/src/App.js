@@ -2,7 +2,7 @@ import { useState } from "react";
 import Battle from "./components/Battle.js";
 import OverWorld from "./components/Overworld.js";
 
-function App() {
+function App(props) {
   const [isBattle, setIsBattle] = useState(false);
 
   return (
@@ -22,10 +22,16 @@ function App() {
           clipPath: "content-box",
         }}
       >
-        {isBattle ? <Battle data={isBattle} setIsBattle={setIsBattle} /> : null}
+        {isBattle ? (
+          <Battle name={props.name} data={isBattle} setIsBattle={setIsBattle} />
+        ) : null}
       </div>
 
-      <OverWorld isBattle={isBattle} setIsBattle={setIsBattle} />
+      <OverWorld
+        defaultCoords={props.defaultCoords}
+        isBattle={isBattle}
+        setIsBattle={setIsBattle}
+      />
     </main>
   );
 }

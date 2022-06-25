@@ -58,7 +58,7 @@ export default function Battle(props) {
       props.data.uuid,
       await generatePokemon(props.data.id)
     );
-    await addHistoric("MrWell", "null", props.data.id, "CATCH");
+    await addHistoric(props.name, "null", props.data.id, "CATCH");
     props.setIsBattle(false);
   };
 

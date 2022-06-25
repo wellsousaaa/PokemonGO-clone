@@ -5,14 +5,14 @@ import Menu from "./common/Menu";
 import NearbyPokemon from "./common/NearbyPokemon";
 import Pokedex from "./common/Pokedex";
 
-const defaultCoords = {
-  lat: process.env.REACT_APP_DEFAULT_LAT,
-  lng: process.env.REACT_APP_DEFAULT_LNG,
-};
+// const defaultCoords = {
+//   lat: process.env.REACT_APP_DEFAULT_LAT,
+//   lng: process.env.REACT_APP_DEFAULT_LNG,
+// };
 
 const H = window.H;
 
-export default function OverWorld(props) {
+export default function OverWorld({ defaultCoords, ...props }) {
   const mapRef = useRef();
   const pokemonRef = useRef([]);
   const [nearbyPokemon, setNearbyPokemon] = useState([]);

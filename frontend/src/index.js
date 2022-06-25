@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import App from "./App.js";
 import reportWebVitals from "./reportWebVitals";
@@ -12,19 +12,55 @@ import "./styles/catch.css";
 import Profile from "./components/common/Profile.js";
 
 function Localization() {
-  // if ("geolocation" in navigator) return <App />;
+  const [name, setName] = useState(localStorage.getItem("poke_name") || "");
+  const [start, setStart] = useState(false);
+  const [coords, setCoords] = useState(null);
+
+  const handleStart = () => {
+    if (!name.trim()) return;
+
+    localStorage.setItem("poke_name", name);
+    setStart(true);
+  };
+
+  const activeGeo = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setCoords({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      });
+    } else {
+      alert("Seu dispositivo não tem localização!");
+    }
+  };
+
+  useEffect(() => {
+    activeGeo();
+  }, []);
+
+  if ("geolocation" in navigator && name && start && coords)
+    return <App defaultCoords={coords} name={name} />;
   return (
     <main className="intro-container">
       <div className="intro">
         {/* <h1>Pokémon GO</h1> */}
-        <img
+        {/* <img
           className="go-icon"
           src="https://pbs.twimg.com/profile_images/1155697286078296069/muxy-u6y_400x400.jpg"
-        />
+        /> */}
 
         <p> Insira o seu username e ative a localização para poder jogar! </p>
-        <input type="text" placeholder="Insira seu username" />
-        <button>Start</button>
+        <input
+          onChange={({ target }) => setName(target.value)}
+          value={name}
+          type="text"
+          placeholder="Insira seu username"
+        />
+        <button onClick={handleStart}>Start</button>
+
+        {!coords && <button onClick={activeGeo}>Ativar Localização</button>}
 
         <Profile intro />
         <p>Made by Wendell de Sousa | 2021</p>

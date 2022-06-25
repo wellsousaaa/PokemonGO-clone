@@ -6,7 +6,7 @@ import Profile from "./Profile";
 
 const Menu = ({ nearbyPokemon }) => {
   const [isListOpen, setListIsOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(true);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   if (isProfileOpen) return <Profile setIsOpen={setIsProfileOpen} />;
   if (isListOpen) return <PokemonList setIsOpen={setListIsOpen} />;
